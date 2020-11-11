@@ -12,8 +12,18 @@
 
 .input {
   width: 300px;
+  margin-bottom: 10px;
 }
 
 .city {
-  color: #fff;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.cities-container {
+  display: flex;
+  flex-wrap: wrap;
 }
