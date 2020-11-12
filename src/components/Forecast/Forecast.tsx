@@ -1,59 +1,55 @@
 import React, { FC } from 'react';
-import { Table, Badge, Menu, Dropdown, Space } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
-import { useSelector, useDispatch } from 'react-redux';
+import { Table } from 'antd';
 
-const menu = (
-  <Menu>
-    <Menu.Item>Action 1</Menu.Item>
-    <Menu.Item>Action 2</Menu.Item>
-  </Menu>
-);
+const { Column, ColumnGroup } = Table;
 
-const Forecast: FC = () => {
-  const cities = useSelector((state: any) => state.cities);
+const timestampConvert = (time: number, type: string) => {
+  const unixTimestamp = time;
+  const milliseconds = unixTimestamp * 1000;
+  const dateObject = new Date(milliseconds);
+  let humanDateFormat = '';
+  if (type === 'date') {
+    humanDateFormat = dateObject.toLocaleString("en-US", {day: "numeric", month: "numeric", year: "numeric"});
+  } else if (type === 'time') {
+    humanDateFormat = dateObject.toLocaleString("en-US", {hour: "numeric", minute: "numeric"});
+  }
+  return humanDateFormat;
+};
 
-  const expandedRowRender = () => {
-    const columns = [
-      { title: 'Date', dataIndex: 'date', key: 'date' },
-      { title: 'Name', dataIndex: 'name', key: 'name' },
-      { title: 'Status', key: 'state', dataIndex: 'status' },
-      { title: 'Upgrade Status', dataIndex: 'upgradeNum', key: 'upgradeNum' },
-    ];
+interface IForecastProps {
+  cityName: string
+  forecast: any
+}
 
-    const data = [];
-    for (let i = 0; i < 1; ++i) {
-      data.push({
-        key: i,
-        date: '2014-12-24 23:12:00',
-        name: 'This is production name',
-        upgradeNum: 'Upgraded: 56',
-        status: 'asdf'
-      });
-    }
-    return <Table columns={columns} dataSource={data} pagination={false} />;
-  };
-
-  const columns = [
-    { title: 'City', dataIndex: 'city', key: 'city' },
-  ];
+const Forecast: FC<IForecastProps> = ({ cityName, forecast}) => {
 
   const data = [];
-  for (let i = 0; i < cities.length; ++i) {
+
+  for (let i = 0; i < forecast.length; i++) {
     data.push({
       key: i,
-      city: cities[i].cityName,
-    });
+      date: timestampConvert(forecast[i].dt, 'date'),
+      temp: forecast[i].temp.day,
+      feels: forecast[i].feels_like.day,
+      pressure: forecast[i].pressure,
+      sunrise: timestampConvert(forecast[i].sunrise, 'time'),
+      sunset: timestampConvert(forecast[i].sunset, 'time')
+    })
   }
 
   return (
-    <Table
-      className="components-table-demo-nested"
-      columns={columns}
-      expandable={{ expandedRowRender }}
-      dataSource={data}
-    />
-  );
+    <Table dataSource={data}>
+      <ColumnGroup title={cityName}>
+        <Column title="Date" dataIndex="date" key="date" />
+        <Column title="Temp (°C)" dataIndex="temp" key="temp" />
+        <Column title="Feels like (°C)" dataIndex="feels" key="feels" />
+        <Column title="Pressure (hPa)" dataIndex="pressure" key="pressure" />
+        <Column title="Sunrise" dataIndex="sunrise" key="sunrise" />
+        <Column title="Sunset" dataIndex="sunset" key="sunset" />
+      </ColumnGroup>
+    </Table>
+  )
+
 };
 
 export default Forecast;

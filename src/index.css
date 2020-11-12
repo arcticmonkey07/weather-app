@@ -2,5 +2,6 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Open Sans', sans-serif;
-  background-image: linear-gradient(to right top, #000000, #221414, #3c201a, #53301b, #644519, #735a21, #80702b, #8b8738, #a2a14f, #babb68, #d2d680, #eaf29a);
+  background-image: linear-gradient(to right top, #bbcfca, #bbcfca);
+  /* background-image: linear-gradient(to right top, #000000, #221414, #3c201a, #53301b, #644519, #735a21, #80702b, #8b8738, #a2a14f, #babb68, #d2d680, #eaf29a); */
 }

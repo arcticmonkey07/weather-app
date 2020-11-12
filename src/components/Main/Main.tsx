@@ -30,23 +30,21 @@ const Main: FC = () => {
         const { lat, lng } = response.results[0].geometry.location;
         const { long_name } = response.results[0].address_components[0];
 
-        let api = `http://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&exclude=minutely,hourly&appid=${OPEN_WEATHER_KEY}`
+        let api = `http://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&units=metric&exclude=minutely,hourly&appid=${OPEN_WEATHER_KEY}`
 
         fetch(api)
           .then(response => response.json())
-          .then(data => { 
-            console.log(data.daily)
-            
+          .then(data => {
             const item = {
               id: Date.now(),
               cityName: long_name,
               forecast: data.daily
             }
-    
+            console.log(data)
             dispatch(setCity(item));
           })
 
-        
+
       },
       error => {
         console.error(error);
@@ -78,7 +76,7 @@ const Main: FC = () => {
           </div>
         </div>
       </div>
-      {cities.length ? <Forecast /> : ''}
+      {cities.length ? cities.map((item: ICity) => <Forecast cityName={item.cityName} forecast={item.forecast} />) : ''}
     </>
   )
 }

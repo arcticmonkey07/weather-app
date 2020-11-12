@@ -1,4 +1,4 @@
-import { SET_CITY, DEL_CITY, SET_FORECAST } from './constants';
+import { SET_CITY, DEL_CITY } from './constants';
 
 export interface IWeatherState {
   cities: Array<Object>
@@ -20,11 +20,5 @@ interface IDelCityAction {
   type: typeof DEL_CITY,
   payload: number
 }
-
-// interface ISetForecastAction {
-//   type: typeof SET_FORECAST,
-//   payload: []
-// }
-
 
 export type WeatherActionTypes = ISetCityAction | IDelCityAction ;
