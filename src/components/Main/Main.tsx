@@ -44,8 +44,6 @@ const Main: FC = () => {
             console.log(data)
             dispatch(setCity(item));
           })
-
-
       },
       error => {
         console.error(error);

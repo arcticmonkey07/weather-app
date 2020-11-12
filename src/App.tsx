@@ -6,17 +6,13 @@ import rootReducer from './redux/reducers/weather';
 import thunk from 'redux-thunk';
 
 import Main from './components/Main/Main';
+import Geolocation from './components/Geolocation/Geolocation';
 
 const App: FC = () => {
 
   const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
   const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
-
-  // useEffect(() => {
-    // navigator.geolocation.getCurrentPosition(position => setLatitude(position.coords.latitude));
-    // navigator.geolocation.getCurrentPosition(position => setLongitude(position.coords.longitude));
-  // }, [])
 
   // const getGeolocation = () => {
   //   return fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}`)
@@ -28,6 +24,7 @@ const App: FC = () => {
     <Provider store={store}>
       <div className='app'>
         <Main />
+        <Geolocation />
       </div>
     </Provider>
   );
