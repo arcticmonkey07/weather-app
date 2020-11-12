@@ -17,33 +17,8 @@ const Forecast: FC = () => {
     const columns = [
       { title: 'Date', dataIndex: 'date', key: 'date' },
       { title: 'Name', dataIndex: 'name', key: 'name' },
-      {
-        title: 'Status',
-        key: 'state',
-        render: () => (
-          <span>
-            <Badge status="success" />
-            Finished
-          </span>
-        ),
-      },
+      { title: 'Status', key: 'state', dataIndex: 'status' },
       { title: 'Upgrade Status', dataIndex: 'upgradeNum', key: 'upgradeNum' },
-      {
-        title: 'Action',
-        dataIndex: 'operation',
-        key: 'operation',
-        render: () => (
-          <Space size="middle">
-            <a>Pause</a>
-            <a>Stop</a>
-            <Dropdown overlay={menu}>
-              <a>
-                More <DownOutlined />
-              </a>
-            </Dropdown>
-          </Space>
-        ),
-      },
     ];
 
     const data = [];
@@ -53,6 +28,7 @@ const Forecast: FC = () => {
         date: '2014-12-24 23:12:00',
         name: 'This is production name',
         upgradeNum: 'Upgraded: 56',
+        status: 'asdf'
       });
     }
     return <Table columns={columns} dataSource={data} pagination={false} />;
@@ -66,7 +42,7 @@ const Forecast: FC = () => {
   for (let i = 0; i < cities.length; ++i) {
     data.push({
       key: i,
-      city: cities[0].cityName,
+      city: cities[i].cityName,
     });
   }
 

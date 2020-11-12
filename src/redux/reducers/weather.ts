@@ -1,4 +1,4 @@
-import { SET_CITY, DEL_CITY } from './../constants';
+import { SET_CITY, DEL_CITY, SET_FORECAST } from './../constants';
 import { IWeatherState, WeatherActionTypes } from './../types';
 
 const initialState: IWeatherState = {

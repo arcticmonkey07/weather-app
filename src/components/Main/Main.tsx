@@ -18,6 +18,7 @@ const Main: FC = () => {
   const dispatch = useDispatch();
   const cities = useSelector((state: any) => state.cities);
   const [town, setTown] = useState<string>('');
+  const [forecast, setForecast] = useState<any>();
 
   Geocode.setApiKey(GOOGLE_API_KEY);
   Geocode.setLanguage("ru");
@@ -29,18 +30,23 @@ const Main: FC = () => {
         const { lat, lng } = response.results[0].geometry.location;
         const { long_name } = response.results[0].address_components[0];
 
-        const item = {
-          id: Date.now(),
-          cityName: long_name
-        }
-
-        dispatch(setCity(item));
-
         let api = `http://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&exclude=minutely,hourly&appid=${OPEN_WEATHER_KEY}`
 
         fetch(api)
           .then(response => response.json())
-          .then(data => console.log(data))
+          .then(data => { 
+            console.log(data.daily)
+            
+            const item = {
+              id: Date.now(),
+              cityName: long_name,
+              forecast: data.daily
+            }
+    
+            dispatch(setCity(item));
+          })
+
+        
       },
       error => {
         console.error(error);
@@ -48,16 +54,16 @@ const Main: FC = () => {
     );
   };
 
-  const cityHandleChange = (e: ChangeEvent<HTMLInputElement>):void => {
+  const cityHandleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setTown(e.target.value);
   }
 
-  const onAdd = ():void => {
+  const onAdd = (): void => {
     getLatAndLong(town);
     setTown('');
   };
 
-  const delHandler = (id: number):void => {
+  const delHandler = (id: number): void => {
     dispatch(delCity(id));
   };
 

@@ -1,4 +1,4 @@
-import { SET_CITY, DEL_CITY } from './constants';
+import { SET_CITY, DEL_CITY, SET_FORECAST } from './constants';
 
 export interface IWeatherState {
   cities: Array<Object>
@@ -7,6 +7,7 @@ export interface IWeatherState {
 export interface ICity {
   id: number
   cityName: string
+  forecast: []
 }
 
 // Actions
@@ -20,4 +21,10 @@ interface IDelCityAction {
   payload: number
 }
 
-export type WeatherActionTypes = ISetCityAction | IDelCityAction;
+// interface ISetForecastAction {
+//   type: typeof SET_FORECAST,
+//   payload: []
+// }
+
+
+export type WeatherActionTypes = ISetCityAction | IDelCityAction ;
