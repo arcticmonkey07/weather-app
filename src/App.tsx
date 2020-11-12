@@ -6,7 +6,6 @@ import rootReducer from './redux/reducers/weather';
 import thunk from 'redux-thunk';
 
 import Main from './components/Main/Main';
-import Forecast from './components/Forecast/Forecast';
 
 const App: FC = () => {
 
@@ -29,7 +28,6 @@ const App: FC = () => {
     <Provider store={store}>
       <div className='app'>
         <Main />
-        <Forecast />
       </div>
     </Provider>
   );

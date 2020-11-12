@@ -1,6 +1,7 @@
 @import '~antd/dist/antd.css';
 
 .app {
+  width: 1100px;
   height: 100vh;
-  background-image: linear-gradient(to right top, #000000, #221414, #3c201a, #53301b, #644519, #735a21, #80702b, #8b8738, #a2a14f, #babb68, #d2d680, #eaf29a);
+  margin: 0 auto;
 }
