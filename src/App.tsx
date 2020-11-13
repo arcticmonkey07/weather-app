@@ -14,12 +14,6 @@ const App: FC = () => {
 
   const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
 
-  // const getGeolocation = () => {
-  //   return fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}`)
-  //     .then(response => response.json())
-  //     .then(data => setCity(data.results[8].formatted_address))
-  // }
-
   return (
     <Provider store={store}>
       <div className='app'>

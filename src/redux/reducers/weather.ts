@@ -1,4 +1,4 @@
-import { SET_CITY, DEL_CITY } from './../constants';
+import { SET_CITY, DEL_CITY, SET_GEO_CITY } from './../constants';
 import { IWeatherState, WeatherActionTypes } from './../types';
 
 let savedCities;
@@ -10,7 +10,8 @@ if (localStorage.getItem('cities')) {
 }
 
 const initialState: IWeatherState = {
-  cities: savedCities
+  cities: savedCities,
+  geolocationCity: ''
 };
 
 const weather = (state = initialState, action: WeatherActionTypes): IWeatherState => {
@@ -24,6 +25,11 @@ const weather = (state = initialState, action: WeatherActionTypes): IWeatherStat
       return {
         ...state,
         cities: state.cities.filter((item: any) => item.id !== action.payload)
+      }
+    case SET_GEO_CITY:
+      return {
+        ...state,
+        geolocationCity: action.payload
       }
     default:
       return state;

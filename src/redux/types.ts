@@ -1,7 +1,8 @@
-import { SET_CITY, DEL_CITY } from './constants';
+import { SET_CITY, DEL_CITY, SET_GEO_CITY } from './constants';
 
 export interface IWeatherState {
   cities: Array<Object>
+  geolocationCity: string
 }
 
 export interface ICity {
@@ -21,4 +22,9 @@ interface IDelCityAction {
   payload: number
 }
 
-export type WeatherActionTypes = ISetCityAction | IDelCityAction ;
+interface ISetGeoCityAction {
+  type: typeof SET_GEO_CITY,
+  payload: string
+}
+
+export type WeatherActionTypes = ISetCityAction | IDelCityAction | ISetGeoCityAction;

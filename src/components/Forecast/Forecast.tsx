@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { Table } from 'antd';
-import { StepBackwardOutlined } from '@ant-design/icons';
 
 const { Column, ColumnGroup } = Table;
 
