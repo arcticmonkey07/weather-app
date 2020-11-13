@@ -2,7 +2,7 @@ import React, { FC, ChangeEvent, useState, useEffect } from 'react';
 import './Main.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCity, delCity } from '../../redux/actions/weather';
-import { Input, Typography, Tag } from 'antd';
+import { Input, Typography, Tag, Result } from 'antd';
 import Geocode from "react-geocode";
 
 import { ICity } from '../../redux/types';
@@ -30,25 +30,36 @@ const Main: FC = () => {
     localStorage.setItem('cities', JSON.stringify(cities));
   }, [cities]);
 
+  const compare = () => {
+    cities.forEach((item: any) => console.log(item.cityName));
+  }
+
   const getCoordinates = (city: string): void => {
     Geocode.fromAddress(city).then(
       (response) => {
         const { lat, lng } = response.results[0].geometry.location;
         const { long_name } = response.results[0].address_components[0];
 
-        let api = `http://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&units=metric&exclude=minutely,hourly&appid=${ENV.OPEN_WEATHER_KEY}`;
+        const excludeSimilar = cities.map((item: any) => item.cityName === long_name);
 
-        fetch(api)
-          .then((response) => response.json())
-          .then((data) => {
-            const item = {
-              id: Date.now(),
-              cityName: long_name,
-              forecast: data.daily,
-            };
-            console.log(data);
-            dispatch(setCity(item));
-          });
+        if (excludeSimilar.includes(true)) {
+          return;
+        }
+        else {
+          let api = `http://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&units=metric&exclude=minutely,hourly&appid=${ENV.OPEN_WEATHER_KEY}`;
+
+          fetch(api)
+            .then((response) => response.json())
+            .then((data) => {
+              const item = {
+                id: Date.now(),
+                cityName: long_name,
+                forecast: data.daily,
+              };
+              // console.log(data);
+              dispatch(setCity(item));
+            });
+        }
       },
       (error) => console.error(error)
     );

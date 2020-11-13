@@ -12,7 +12,6 @@ const Geolocation: FC = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const [latitude, setLatitude] = useState<number>();
   const [longitude, setLongitude] = useState<number>();
-  const [city, setCity] = useState<string>('');
 
   useEffect(() => {
     setTimeout(() => {

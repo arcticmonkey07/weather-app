@@ -45,7 +45,7 @@ const Forecast: FC<IForecastProps> = ({ cityName, forecast}) => {
     })
   }
 
-  console.log(data)
+  // console.log(data)
 
   return (
     <Table dataSource={data}>
