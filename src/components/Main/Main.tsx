@@ -31,34 +31,36 @@ const Main: FC = () => {
   }, [cities]);
 
   const getCoordinates = (city: string): void => {
-    Geocode.fromAddress(city).then(
-      (response) => {
-        const { lat, lng } = response.results[0].geometry.location;
-        const { long_name } = response.results[0].address_components[0];
+    if (city) {
+      Geocode.fromAddress(city).then(
+        (response) => {
+          const { lat, lng } = response.results[0].geometry.location;
+          const { long_name } = response.results[0].address_components[0];
 
-        const excludeSimilar = cities.map((item: any) => item.cityName === long_name);
+          const excludeSimilar = cities.map((item: any) => item.cityName === long_name);
 
-        if (excludeSimilar.includes(true)) {
-          return;
-        }
-        else {
-          let api = `http://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&units=metric&exclude=minutely,hourly&appid=${ENV.OPEN_WEATHER_KEY}`;
+          if (excludeSimilar.includes(true)) {
+            return;
+          }
+          else {
+            let api = `http://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&units=metric&exclude=minutely,hourly&appid=${ENV.OPEN_WEATHER_KEY}`;
 
-          fetch(api)
-            .then((response) => response.json())
-            .then((data) => {
-              const item = {
-                id: Date.now(),
-                cityName: long_name,
-                forecast: data.daily,
-              };
-              // console.log(data);
-              dispatch(setCity(item));
-            });
-        }
-      },
-      (error) => console.error(error)
-    );
+            fetch(api)
+              .then((response) => response.json())
+              .then((data) => {
+                const item = {
+                  id: Date.now(),
+                  cityName: long_name,
+                  forecast: data.daily,
+                };
+                // console.log(data);
+                dispatch(setCity(item));
+              });
+          }
+        },
+        (error) => console.error(error)
+      );
+    }
   };
 
 
