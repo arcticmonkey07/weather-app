@@ -30,10 +30,6 @@ const Main: FC = () => {
     localStorage.setItem('cities', JSON.stringify(cities));
   }, [cities]);
 
-  const compare = () => {
-    cities.forEach((item: any) => console.log(item.cityName));
-  }
-
   const getCoordinates = (city: string): void => {
     Geocode.fromAddress(city).then(
       (response) => {
@@ -90,7 +86,7 @@ const Main: FC = () => {
           </div>
         </div>
       </div>
-      {cities.length ? cities.map((item: ICity) => <Forecast cityName={item.cityName} forecast={item.forecast} />) : ''}
+      {cities.length ? cities.map((item: ICity) => <Forecast key={item.id} cityName={item.cityName} forecast={item.forecast} />) : ''}
     </>
   )
 }

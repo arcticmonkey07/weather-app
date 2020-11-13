@@ -29,7 +29,10 @@ const Geolocation: FC = () => {
   const handleOk = () => {
     fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${ENV.GOOGLE_API_KEY}`)
       .then(response => response.json())
-      .then(data => dispatch(setGeoCity(data.results[8].address_components[0].long_name)))
+      .then(data => {
+
+        dispatch(setGeoCity(data.results[8].address_components[0].long_name));
+      })
       .catch(error => console.log(error));
 
     setVisible(false);
