@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import './Forecast.css';
 import { Table } from 'antd';
 
 const { Column, ColumnGroup } = Table;
@@ -9,23 +10,23 @@ const timestampConvert = (time: number, type: string) => {
   const dateObject = new Date(milliseconds);
   let humanDateFormat = '';
   if (type === 'date') {
-    humanDateFormat = dateObject.toLocaleString("en-US", {day: "numeric", month: "numeric", year: "numeric"});
+    humanDateFormat = dateObject.toLocaleString("en-US", { day: "numeric", month: "numeric", year: "numeric" });
   } else if (type === 'time') {
-    humanDateFormat = dateObject.toLocaleString("en-US", {hour: "numeric", minute: "numeric"});
+    humanDateFormat = dateObject.toLocaleString("en-US", { hour: "numeric", minute: "numeric" });
   }
   return humanDateFormat;
 };
 
-// const getIconHandler = (icon: any) => {
-//   return `http://openweathermap.org/img/wn/${icon}@2x.png`
-// };
+const getIconHandler = (icon: any) => {
+  return `http://openweathermap.org/img/wn/${icon}@2x.png`
+};
 
 interface IForecastProps {
   cityName: string
   forecast: any
 }
 
-const Forecast: FC<IForecastProps> = ({ cityName, forecast}) => {
+const Forecast: FC<IForecastProps> = ({ cityName, forecast }) => {
 
   const data = [];
 
@@ -36,7 +37,7 @@ const Forecast: FC<IForecastProps> = ({ cityName, forecast}) => {
       temp: forecast[i].temp.day,
       feels: forecast[i].feels_like.day,
       weather: forecast[i].weather[0].description,
-      // weatherIcon: getIconHandler(forecast[i].weather[0].icon),
+      weatherIcon: getIconHandler(forecast[i].weather[0].icon),
       pressure: forecast[i].pressure,
       humidity: forecast[i].humidity,
       sunrise: timestampConvert(forecast[i].sunrise, 'time'),
@@ -45,7 +46,7 @@ const Forecast: FC<IForecastProps> = ({ cityName, forecast}) => {
     })
   }
 
-  // console.log(data)
+  console.log(data)
 
   return (
     <Table dataSource={data}>
@@ -54,7 +55,9 @@ const Forecast: FC<IForecastProps> = ({ cityName, forecast}) => {
         <Column title="Temp (°C)" dataIndex="temp" key="temp" />
         <Column title="Feels like (°C)" dataIndex="feels" key="feels" />
         <Column title="Weather" dataIndex="weather" key="weather" />
-        {/* <Column title="Icon" dataIndex="weatherIcon" key="weatherIcon" /> */}
+        <Column title="Icon" dataIndex='weatherIcon' key="weatherIcon" render={(weatherIcon) => (
+          <img className='weatherIcon' src={weatherIcon}/>
+        )} />
         <Column title="Pressure (hPa)" dataIndex="pressure" key="pressure" />
         <Column title="Humidity" dataIndex="humidity" key="humidity" />
         <Column title="Sunrise" dataIndex="sunrise" key="sunrise" />

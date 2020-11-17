@@ -53,7 +53,7 @@ const Main: FC = () => {
                   cityName: long_name,
                   forecast: data.daily,
                 };
-                // console.log(data);
+                console.log(data);
                 dispatch(setCity(item));
               });
           }
